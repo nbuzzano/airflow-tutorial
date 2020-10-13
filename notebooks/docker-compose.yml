@@ -1,8 +1,8 @@
 version: '3'
 services:
   jupyter-notebook:
-    build: .
-    image: my-jupyter-notebook    
+    build: . #usa el Dockerfile presente en el path donde se ejecuta este archivo 
+    image: my-jupyter-notebook # nombre de la imagen
     volumes:
       - ./gcloud-example:/home/jovyan/work      
     ports:

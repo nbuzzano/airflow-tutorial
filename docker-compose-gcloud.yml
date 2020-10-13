@@ -16,7 +16,8 @@ services:
       dockerfile: Dockerfile
       args:
         AIRFLOW_DEPS: gcp_api,s3
-        PYTHON_DEPS: sqlalchemy==1.2.0        
+        PYTHON_DEPS: sqlalchemy==1.2.0
+        #installing a few dependencies on the airflow container
     restart: always
     depends_on:
       - postgres
@@ -24,6 +25,7 @@ services:
       - LOAD_EX=n
       - EXECUTOR=Local
       - FERNET_KEY=jsDPRErfv8Z_eVTnGfF8ywd19j4pyqE3NpdUBA_oRTo=
+      #https://github.com/puckel/docker-airflow/tree/1.10.0-5#usage
     volumes:
       - ./examples/gcloud-example/dags:/usr/local/airflow/dags
       # Uncomment to include custom plugins
@@ -36,3 +38,5 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
+
+#docker-airflow at init looks for a DB in 5432 port. https://github.com/puckel/docker-airflow/tree/1.10.0-5#configurating-airflow

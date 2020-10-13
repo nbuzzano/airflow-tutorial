@@ -8,10 +8,14 @@ from airflow.contrib.operators.bigquery_check_operator import BigQueryCheckOpera
 
 
 # Config variables
-dag_config = Variable.get("bigquery_github_trends_variables", deserialize_json=True)
-BQ_CONN_ID = dag_config["bq_conn_id"]
-BQ_PROJECT = dag_config["bq_project"]
-BQ_DATASET = dag_config["bq_dataset"]
+#dag_config = Variable.get("bigquery_github_trends_variables", deserialize_json=True)
+#BQ_CONN_ID = dag_config["bq_conn_id"]
+#BQ_PROJECT = dag_config["bq_project"]
+#BQ_DATASET = dag_config["bq_dataset"]
+
+BQ_CONN_ID = "my_gcp_conn"
+BQ_PROJECT = "airflow-sandbox-290621"
+BQ_DATASET = "github_trands"
 
 default_args = {
     'owner': 'airflow',
@@ -264,3 +268,32 @@ t5.set_upstream(t2)
 t6.set_upstream(t4)
 t6.set_upstream(t5)
 t7.set_upstream(t6)
+
+# ===================================
+
+# BigQuery useful documentation:
+
+# BigQueryCheckOperator
+# http://airflow.apache.org/docs/stable/_api/airflow/contrib/operators/bigquery_check_operator/index.html
+# Es un validadro IF TRUE básicamente 
+
+# ==
+# Parameter > use_legacy_sql 
+# https://cloud.google.com/bigquery/docs/reference/standard-sql/migrating-from-legacy-sql?hl=es-419
+# Parece que antes BigQuery tenia una sintaxis SQL propia y en BigQuery 2.0 la abandonaron por el SQL standard, 
+# entonces si quieres usar la sintaxis vieja este parámetro sera TRUE
+
+# ==
+# _PARTITIONTIME
+# https://cloud.google.com/bigquery/docs/partitioned-tables
+# https://www.reddit.com/r/bigquery/comments/a1o6h3/trying_to_understand_partitiontime/
+
+# ==
+# Write Disposition
+# https://cloud.google.com/bigquery/docs/reference/auditlogs/rest/Shared.Types/WriteDisposition
+
+# ==
+# allow_large_results=True,
+# https://cloud.google.com/bigquery/docs/writing-results#large-results
+
+
